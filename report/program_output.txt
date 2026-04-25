@@ -1,0 +1,452 @@
+
+
+TEST 1: LECTURE EXAMPLE (Slides Fig 8.16)
+======================================================================
+FLOYD'S ALGORITHM - ALL PAIRS SHORTEST PATHS
+======================================================================
+Vertices: a, b, c, d
+
+
+D^(0) - Initial Weight Matrix
+---------------------------------------
+           a        b        c        d
+---------------------------------------
+a          0      INF        3      INF
+b          2        0      INF      INF
+c        INF        7        0        1
+d          6      INF      INF        0
+
+
+D^(1) - intermediate: a
+---------------------------------------
+           a        b        c        d
+---------------------------------------
+a          0      INF        3      INF
+b          2        0        5      INF
+c        INF        7        0        1
+d          6      INF        9        0
+
+
+D^(2) - intermediate: b
+---------------------------------------
+           a        b        c        d
+---------------------------------------
+a          0      INF        3      INF
+b          2        0        5      INF
+c          9        7        0        1
+d          6      INF        9        0
+
+
+D^(3) - intermediate: c
+---------------------------------------
+           a        b        c        d
+---------------------------------------
+a          0       10        3        4
+b          2        0        5        6
+c          9        7        0        1
+d          6       16        9        0
+
+
+D^(4) - intermediate: d
+---------------------------------------
+           a        b        c        d
+---------------------------------------
+a          0       10        3        4
+b          2        0        5        6
+c          7        7        0        1
+d          6       16        9        0
+
+
+======================================================================
+ALL SHORTEST PATHS
+======================================================================
+a -> b: Length=10,  Path: a -> c -> b
+a -> c: Length=3,  Path: a -> c
+a -> d: Length=4,  Path: a -> c -> d
+b -> a: Length=2,  Path: b -> a
+b -> c: Length=5,  Path: b -> a -> c
+b -> d: Length=6,  Path: b -> a -> c -> d
+c -> a: Length=7,  Path: c -> d -> a
+c -> b: Length=7,  Path: c -> b
+c -> d: Length=1,  Path: c -> d
+d -> a: Length=6,  Path: d -> a
+d -> b: Length=16,  Path: d -> a -> c -> b
+d -> c: Length=9,  Path: d -> a -> c
+
+
+TEST 2: US CITIES GRAPH (Figure 2)
+======================================================================
+FLOYD'S ALGORITHM - ALL PAIRS SHORTEST PATHS
+======================================================================
+Vertices: Seattle, SanFrancisco, LosAngeles, Denver, KansasCity, Dallas, Houston, Chicago, Boston, NewYork, Atlanta, Miami
+
+
+D^(0) - Initial Weight Matrix
+--------------------------------------------------------------------------------------------------------------------------
+                SeattleSanFranciscoLosAngeles   DenverKansasCity   Dallas  Houston  Chicago   Boston  NewYork  Atlanta    Miami
+--------------------------------------------------------------------------------------------------------------------------
+Seattle               0      807      INF     1331      INF      INF      INF     2097      INF      INF      INF      INF
+SanFrancisco        807        0      381     1267     1015      INF      INF      INF      INF      INF      INF      INF
+LosAngeles          INF      381        0      INF     1663     1435      INF      INF      INF      INF      INF      INF
+Denver             1331     1267      INF        0      599      INF      INF     1003      INF      INF      INF      INF
+KansasCity          INF     1015     1663      599        0      496      INF      533      INF      INF      864      INF
+Dallas              INF      INF     1435      INF      496        0      239      INF      INF      INF      781      INF
+Houston             INF      INF      INF      INF      INF      239        0      INF      INF      INF      810     1187
+Chicago            2097      INF      INF     1003      533      INF      INF        0      983      787      INF      INF
+Boston              INF      INF      INF      INF      INF      INF      INF      983        0      214      INF      INF
+NewYork             INF      INF      INF      INF      INF      INF      INF      787      214        0     1260      INF
+Atlanta             INF      INF      INF      INF      864      781      810      INF      INF     1260        0      661
+Miami               INF      INF      INF      INF      INF      INF     1187      INF      INF      INF      661        0
+
+
+D^(1) - intermediate: Seattle
+--------------------------------------------------------------------------------------------------------------------------
+                SeattleSanFranciscoLosAngeles   DenverKansasCity   Dallas  Houston  Chicago   Boston  NewYork  Atlanta    Miami
+--------------------------------------------------------------------------------------------------------------------------
+Seattle               0      807      INF     1331      INF      INF      INF     2097      INF      INF      INF      INF
+SanFrancisco        807        0      381     1267     1015      INF      INF     2904      INF      INF      INF      INF
+LosAngeles          INF      381        0      INF     1663     1435      INF      INF      INF      INF      INF      INF
+Denver             1331     1267      INF        0      599      INF      INF     1003      INF      INF      INF      INF
+KansasCity          INF     1015     1663      599        0      496      INF      533      INF      INF      864      INF
+Dallas              INF      INF     1435      INF      496        0      239      INF      INF      INF      781      INF
+Houston             INF      INF      INF      INF      INF      239        0      INF      INF      INF      810     1187
+Chicago            2097     2904      INF     1003      533      INF      INF        0      983      787      INF      INF
+Boston              INF      INF      INF      INF      INF      INF      INF      983        0      214      INF      INF
+NewYork             INF      INF      INF      INF      INF      INF      INF      787      214        0     1260      INF
+Atlanta             INF      INF      INF      INF      864      781      810      INF      INF     1260        0      661
+Miami               INF      INF      INF      INF      INF      INF     1187      INF      INF      INF      661        0
+
+
+D^(2) - intermediate: SanFrancisco
+--------------------------------------------------------------------------------------------------------------------------
+                SeattleSanFranciscoLosAngeles   DenverKansasCity   Dallas  Houston  Chicago   Boston  NewYork  Atlanta    Miami
+--------------------------------------------------------------------------------------------------------------------------
+Seattle               0      807     1188     1331     1822      INF      INF     2097      INF      INF      INF      INF
+SanFrancisco        807        0      381     1267     1015      INF      INF     2904      INF      INF      INF      INF
+LosAngeles         1188      381        0     1648     1396     1435      INF     3285      INF      INF      INF      INF
+Denver             1331     1267     1648        0      599      INF      INF     1003      INF      INF      INF      INF
+KansasCity         1822     1015     1396      599        0      496      INF      533      INF      INF      864      INF
+Dallas              INF      INF     1435      INF      496        0      239      INF      INF      INF      781      INF
+Houston             INF      INF      INF      INF      INF      239        0      INF      INF      INF      810     1187
+Chicago            2097     2904     3285     1003      533      INF      INF        0      983      787      INF      INF
+Boston              INF      INF      INF      INF      INF      INF      INF      983        0      214      INF      INF
+NewYork             INF      INF      INF      INF      INF      INF      INF      787      214        0     1260      INF
+Atlanta             INF      INF      INF      INF      864      781      810      INF      INF     1260        0      661
+Miami               INF      INF      INF      INF      INF      INF     1187      INF      INF      INF      661        0
+
+
+D^(3) - intermediate: LosAngeles
+--------------------------------------------------------------------------------------------------------------------------
+                SeattleSanFranciscoLosAngeles   DenverKansasCity   Dallas  Houston  Chicago   Boston  NewYork  Atlanta    Miami
+--------------------------------------------------------------------------------------------------------------------------
+Seattle               0      807     1188     1331     1822     2623      INF     2097      INF      INF      INF      INF
+SanFrancisco        807        0      381     1267     1015     1816      INF     2904      INF      INF      INF      INF
+LosAngeles         1188      381        0     1648     1396     1435      INF     3285      INF      INF      INF      INF
+Denver             1331     1267     1648        0      599     3083      INF     1003      INF      INF      INF      INF
+KansasCity         1822     1015     1396      599        0      496      INF      533      INF      INF      864      INF
+Dallas             2623     1816     1435     3083      496        0      239     4720      INF      INF      781      INF
+Houston             INF      INF      INF      INF      INF      239        0      INF      INF      INF      810     1187
+Chicago            2097     2904     3285     1003      533     4720      INF        0      983      787      INF      INF
+Boston              INF      INF      INF      INF      INF      INF      INF      983        0      214      INF      INF
+NewYork             INF      INF      INF      INF      INF      INF      INF      787      214        0     1260      INF
+Atlanta             INF      INF      INF      INF      864      781      810      INF      INF     1260        0      661
+Miami               INF      INF      INF      INF      INF      INF     1187      INF      INF      INF      661        0
+
+
+D^(4) - intermediate: Denver
+--------------------------------------------------------------------------------------------------------------------------
+                SeattleSanFranciscoLosAngeles   DenverKansasCity   Dallas  Houston  Chicago   Boston  NewYork  Atlanta    Miami
+--------------------------------------------------------------------------------------------------------------------------
+Seattle               0      807     1188     1331     1822     2623      INF     2097      INF      INF      INF      INF
+SanFrancisco        807        0      381     1267     1015     1816      INF     2270      INF      INF      INF      INF
+LosAngeles         1188      381        0     1648     1396     1435      INF     2651      INF      INF      INF      INF
+Denver             1331     1267     1648        0      599     3083      INF     1003      INF      INF      INF      INF
+KansasCity         1822     1015     1396      599        0      496      INF      533      INF      INF      864      INF
+Dallas             2623     1816     1435     3083      496        0      239     4086      INF      INF      781      INF
+Houston             INF      INF      INF      INF      INF      239        0      INF      INF      INF      810     1187
+Chicago            2097     2270     2651     1003      533     4086      INF        0      983      787      INF      INF
+Boston              INF      INF      INF      INF      INF      INF      INF      983        0      214      INF      INF
+NewYork             INF      INF      INF      INF      INF      INF      INF      787      214        0     1260      INF
+Atlanta             INF      INF      INF      INF      864      781      810      INF      INF     1260        0      661
+Miami               INF      INF      INF      INF      INF      INF     1187      INF      INF      INF      661        0
+
+
+D^(5) - intermediate: KansasCity
+--------------------------------------------------------------------------------------------------------------------------
+                SeattleSanFranciscoLosAngeles   DenverKansasCity   Dallas  Houston  Chicago   Boston  NewYork  Atlanta    Miami
+--------------------------------------------------------------------------------------------------------------------------
+Seattle               0      807     1188     1331     1822     2318      INF     2097      INF      INF     2686      INF
+SanFrancisco        807        0      381     1267     1015     1511      INF     1548      INF      INF     1879      INF
+LosAngeles         1188      381        0     1648     1396     1435      INF     1929      INF      INF     2260      INF
+Denver             1331     1267     1648        0      599     1095      INF     1003      INF      INF     1463      INF
+KansasCity         1822     1015     1396      599        0      496      INF      533      INF      INF      864      INF
+Dallas             2318     1511     1435     1095      496        0      239     1029      INF      INF      781      INF
+Houston             INF      INF      INF      INF      INF      239        0      INF      INF      INF      810     1187
+Chicago            2097     1548     1929     1003      533     1029      INF        0      983      787     1397      INF
+Boston              INF      INF      INF      INF      INF      INF      INF      983        0      214      INF      INF
+NewYork             INF      INF      INF      INF      INF      INF      INF      787      214        0     1260      INF
+Atlanta            2686     1879     2260     1463      864      781      810     1397      INF     1260        0      661
+Miami               INF      INF      INF      INF      INF      INF     1187      INF      INF      INF      661        0
+
+
+D^(6) - intermediate: Dallas
+--------------------------------------------------------------------------------------------------------------------------
+                SeattleSanFranciscoLosAngeles   DenverKansasCity   Dallas  Houston  Chicago   Boston  NewYork  Atlanta    Miami
+--------------------------------------------------------------------------------------------------------------------------
+Seattle               0      807     1188     1331     1822     2318     2557     2097      INF      INF     2686      INF
+SanFrancisco        807        0      381     1267     1015     1511     1750     1548      INF      INF     1879      INF
+LosAngeles         1188      381        0     1648     1396     1435     1674     1929      INF      INF     2216      INF
+Denver             1331     1267     1648        0      599     1095     1334     1003      INF      INF     1463      INF
+KansasCity         1822     1015     1396      599        0      496      735      533      INF      INF      864      INF
+Dallas             2318     1511     1435     1095      496        0      239     1029      INF      INF      781      INF
+Houston            2557     1750     1674     1334      735      239        0     1268      INF      INF      810     1187
+Chicago            2097     1548     1929     1003      533     1029     1268        0      983      787     1397      INF
+Boston              INF      INF      INF      INF      INF      INF      INF      983        0      214      INF      INF
+NewYork             INF      INF      INF      INF      INF      INF      INF      787      214        0     1260      INF
+Atlanta            2686     1879     2216     1463      864      781      810     1397      INF     1260        0      661
+Miami               INF      INF      INF      INF      INF      INF     1187      INF      INF      INF      661        0
+
+
+D^(7) - intermediate: Houston
+--------------------------------------------------------------------------------------------------------------------------
+                SeattleSanFranciscoLosAngeles   DenverKansasCity   Dallas  Houston  Chicago   Boston  NewYork  Atlanta    Miami
+--------------------------------------------------------------------------------------------------------------------------
+Seattle               0      807     1188     1331     1822     2318     2557     2097      INF      INF     2686     3744
+SanFrancisco        807        0      381     1267     1015     1511     1750     1548      INF      INF     1879     2937
+LosAngeles         1188      381        0     1648     1396     1435     1674     1929      INF      INF     2216     2861
+Denver             1331     1267     1648        0      599     1095     1334     1003      INF      INF     1463     2521
+KansasCity         1822     1015     1396      599        0      496      735      533      INF      INF      864     1922
+Dallas             2318     1511     1435     1095      496        0      239     1029      INF      INF      781     1426
+Houston            2557     1750     1674     1334      735      239        0     1268      INF      INF      810     1187
+Chicago            2097     1548     1929     1003      533     1029     1268        0      983      787     1397     2455
+Boston              INF      INF      INF      INF      INF      INF      INF      983        0      214      INF      INF
+NewYork             INF      INF      INF      INF      INF      INF      INF      787      214        0     1260      INF
+Atlanta            2686     1879     2216     1463      864      781      810     1397      INF     1260        0      661
+Miami              3744     2937     2861     2521     1922     1426     1187     2455      INF      INF      661        0
+
+
+D^(8) - intermediate: Chicago
+--------------------------------------------------------------------------------------------------------------------------
+                SeattleSanFranciscoLosAngeles   DenverKansasCity   Dallas  Houston  Chicago   Boston  NewYork  Atlanta    Miami
+--------------------------------------------------------------------------------------------------------------------------
+Seattle               0      807     1188     1331     1822     2318     2557     2097     3080     2884     2686     3744
+SanFrancisco        807        0      381     1267     1015     1511     1750     1548     2531     2335     1879     2937
+LosAngeles         1188      381        0     1648     1396     1435     1674     1929     2912     2716     2216     2861
+Denver             1331     1267     1648        0      599     1095     1334     1003     1986     1790     1463     2521
+KansasCity         1822     1015     1396      599        0      496      735      533     1516     1320      864     1922
+Dallas             2318     1511     1435     1095      496        0      239     1029     2012     1816      781     1426
+Houston            2557     1750     1674     1334      735      239        0     1268     2251     2055      810     1187
+Chicago            2097     1548     1929     1003      533     1029     1268        0      983      787     1397     2455
+Boston             3080     2531     2912     1986     1516     2012     2251      983        0      214     2380     3438
+NewYork            2884     2335     2716     1790     1320     1816     2055      787      214        0     1260     3242
+Atlanta            2686     1879     2216     1463      864      781      810     1397     2380     1260        0      661
+Miami              3744     2937     2861     2521     1922     1426     1187     2455     3438     3242      661        0
+
+
+D^(9) - intermediate: Boston
+--------------------------------------------------------------------------------------------------------------------------
+                SeattleSanFranciscoLosAngeles   DenverKansasCity   Dallas  Houston  Chicago   Boston  NewYork  Atlanta    Miami
+--------------------------------------------------------------------------------------------------------------------------
+Seattle               0      807     1188     1331     1822     2318     2557     2097     3080     2884     2686     3744
+SanFrancisco        807        0      381     1267     1015     1511     1750     1548     2531     2335     1879     2937
+LosAngeles         1188      381        0     1648     1396     1435     1674     1929     2912     2716     2216     2861
+Denver             1331     1267     1648        0      599     1095     1334     1003     1986     1790     1463     2521
+KansasCity         1822     1015     1396      599        0      496      735      533     1516     1320      864     1922
+Dallas             2318     1511     1435     1095      496        0      239     1029     2012     1816      781     1426
+Houston            2557     1750     1674     1334      735      239        0     1268     2251     2055      810     1187
+Chicago            2097     1548     1929     1003      533     1029     1268        0      983      787     1397     2455
+Boston             3080     2531     2912     1986     1516     2012     2251      983        0      214     2380     3438
+NewYork            2884     2335     2716     1790     1320     1816     2055      787      214        0     1260     3242
+Atlanta            2686     1879     2216     1463      864      781      810     1397     2380     1260        0      661
+Miami              3744     2937     2861     2521     1922     1426     1187     2455     3438     3242      661        0
+
+
+D^(10) - intermediate: NewYork
+--------------------------------------------------------------------------------------------------------------------------
+                SeattleSanFranciscoLosAngeles   DenverKansasCity   Dallas  Houston  Chicago   Boston  NewYork  Atlanta    Miami
+--------------------------------------------------------------------------------------------------------------------------
+Seattle               0      807     1188     1331     1822     2318     2557     2097     3080     2884     2686     3744
+SanFrancisco        807        0      381     1267     1015     1511     1750     1548     2531     2335     1879     2937
+LosAngeles         1188      381        0     1648     1396     1435     1674     1929     2912     2716     2216     2861
+Denver             1331     1267     1648        0      599     1095     1334     1003     1986     1790     1463     2521
+KansasCity         1822     1015     1396      599        0      496      735      533     1516     1320      864     1922
+Dallas             2318     1511     1435     1095      496        0      239     1029     2012     1816      781     1426
+Houston            2557     1750     1674     1334      735      239        0     1268     2251     2055      810     1187
+Chicago            2097     1548     1929     1003      533     1029     1268        0      983      787     1397     2455
+Boston             3080     2531     2912     1986     1516     2012     2251      983        0      214     1474     3438
+NewYork            2884     2335     2716     1790     1320     1816     2055      787      214        0     1260     3242
+Atlanta            2686     1879     2216     1463      864      781      810     1397     1474     1260        0      661
+Miami              3744     2937     2861     2521     1922     1426     1187     2455     3438     3242      661        0
+
+
+D^(11) - intermediate: Atlanta
+--------------------------------------------------------------------------------------------------------------------------
+                SeattleSanFranciscoLosAngeles   DenverKansasCity   Dallas  Houston  Chicago   Boston  NewYork  Atlanta    Miami
+--------------------------------------------------------------------------------------------------------------------------
+Seattle               0      807     1188     1331     1822     2318     2557     2097     3080     2884     2686     3347
+SanFrancisco        807        0      381     1267     1015     1511     1750     1548     2531     2335     1879     2540
+LosAngeles         1188      381        0     1648     1396     1435     1674     1929     2912     2716     2216     2861
+Denver             1331     1267     1648        0      599     1095     1334     1003     1986     1790     1463     2124
+KansasCity         1822     1015     1396      599        0      496      735      533     1516     1320      864     1525
+Dallas             2318     1511     1435     1095      496        0      239     1029     2012     1816      781     1426
+Houston            2557     1750     1674     1334      735      239        0     1268     2251     2055      810     1187
+Chicago            2097     1548     1929     1003      533     1029     1268        0      983      787     1397     2058
+Boston             3080     2531     2912     1986     1516     2012     2251      983        0      214     1474     2135
+NewYork            2884     2335     2716     1790     1320     1816     2055      787      214        0     1260     1921
+Atlanta            2686     1879     2216     1463      864      781      810     1397     1474     1260        0      661
+Miami              3347     2540     2861     2124     1525     1426     1187     2058     2135     1921      661        0
+
+
+D^(12) - intermediate: Miami
+--------------------------------------------------------------------------------------------------------------------------
+                SeattleSanFranciscoLosAngeles   DenverKansasCity   Dallas  Houston  Chicago   Boston  NewYork  Atlanta    Miami
+--------------------------------------------------------------------------------------------------------------------------
+Seattle               0      807     1188     1331     1822     2318     2557     2097     3080     2884     2686     3347
+SanFrancisco        807        0      381     1267     1015     1511     1750     1548     2531     2335     1879     2540
+LosAngeles         1188      381        0     1648     1396     1435     1674     1929     2912     2716     2216     2861
+Denver             1331     1267     1648        0      599     1095     1334     1003     1986     1790     1463     2124
+KansasCity         1822     1015     1396      599        0      496      735      533     1516     1320      864     1525
+Dallas             2318     1511     1435     1095      496        0      239     1029     2012     1816      781     1426
+Houston            2557     1750     1674     1334      735      239        0     1268     2251     2055      810     1187
+Chicago            2097     1548     1929     1003      533     1029     1268        0      983      787     1397     2058
+Boston             3080     2531     2912     1986     1516     2012     2251      983        0      214     1474     2135
+NewYork            2884     2335     2716     1790     1320     1816     2055      787      214        0     1260     1921
+Atlanta            2686     1879     2216     1463      864      781      810     1397     1474     1260        0      661
+Miami              3347     2540     2861     2124     1525     1426     1187     2058     2135     1921      661        0
+
+
+======================================================================
+ALL SHORTEST PATHS
+======================================================================
+Seattle -> SanFrancisco: Length=807,  Path: Seattle -> SanFrancisco
+Seattle -> LosAngeles: Length=1188,  Path: Seattle -> SanFrancisco -> LosAngeles
+Seattle -> Denver: Length=1331,  Path: Seattle -> Denver
+Seattle -> KansasCity: Length=1822,  Path: Seattle -> SanFrancisco -> KansasCity
+Seattle -> Dallas: Length=2318,  Path: Seattle -> SanFrancisco -> KansasCity -> Dallas
+Seattle -> Houston: Length=2557,  Path: Seattle -> SanFrancisco -> KansasCity -> Dallas -> Houston
+Seattle -> Chicago: Length=2097,  Path: Seattle -> Chicago
+Seattle -> Boston: Length=3080,  Path: Seattle -> Chicago -> Boston
+Seattle -> NewYork: Length=2884,  Path: Seattle -> Chicago -> NewYork
+Seattle -> Atlanta: Length=2686,  Path: Seattle -> SanFrancisco -> KansasCity -> Atlanta
+Seattle -> Miami: Length=3347,  Path: Seattle -> SanFrancisco -> KansasCity -> Atlanta -> Miami
+SanFrancisco -> Seattle: Length=807,  Path: SanFrancisco -> Seattle
+SanFrancisco -> LosAngeles: Length=381,  Path: SanFrancisco -> LosAngeles
+SanFrancisco -> Denver: Length=1267,  Path: SanFrancisco -> Denver
+SanFrancisco -> KansasCity: Length=1015,  Path: SanFrancisco -> KansasCity
+SanFrancisco -> Dallas: Length=1511,  Path: SanFrancisco -> KansasCity -> Dallas
+SanFrancisco -> Houston: Length=1750,  Path: SanFrancisco -> KansasCity -> Dallas -> Houston
+SanFrancisco -> Chicago: Length=1548,  Path: SanFrancisco -> KansasCity -> Chicago
+SanFrancisco -> Boston: Length=2531,  Path: SanFrancisco -> KansasCity -> Chicago -> Boston
+SanFrancisco -> NewYork: Length=2335,  Path: SanFrancisco -> KansasCity -> Chicago -> NewYork
+SanFrancisco -> Atlanta: Length=1879,  Path: SanFrancisco -> KansasCity -> Atlanta
+SanFrancisco -> Miami: Length=2540,  Path: SanFrancisco -> KansasCity -> Atlanta -> Miami
+LosAngeles -> Seattle: Length=1188,  Path: LosAngeles -> SanFrancisco -> Seattle
+LosAngeles -> SanFrancisco: Length=381,  Path: LosAngeles -> SanFrancisco
+LosAngeles -> Denver: Length=1648,  Path: LosAngeles -> SanFrancisco -> Denver
+LosAngeles -> KansasCity: Length=1396,  Path: LosAngeles -> SanFrancisco -> KansasCity
+LosAngeles -> Dallas: Length=1435,  Path: LosAngeles -> Dallas
+LosAngeles -> Houston: Length=1674,  Path: LosAngeles -> Dallas -> Houston
+LosAngeles -> Chicago: Length=1929,  Path: LosAngeles -> SanFrancisco -> KansasCity -> Chicago
+LosAngeles -> Boston: Length=2912,  Path: LosAngeles -> SanFrancisco -> KansasCity -> Chicago -> Boston
+LosAngeles -> NewYork: Length=2716,  Path: LosAngeles -> SanFrancisco -> KansasCity -> Chicago -> NewYork
+LosAngeles -> Atlanta: Length=2216,  Path: LosAngeles -> Dallas -> Atlanta
+LosAngeles -> Miami: Length=2861,  Path: LosAngeles -> Dallas -> Houston -> Miami
+Denver -> Seattle: Length=1331,  Path: Denver -> Seattle
+Denver -> SanFrancisco: Length=1267,  Path: Denver -> SanFrancisco
+Denver -> LosAngeles: Length=1648,  Path: Denver -> SanFrancisco -> LosAngeles
+Denver -> KansasCity: Length=599,  Path: Denver -> KansasCity
+Denver -> Dallas: Length=1095,  Path: Denver -> KansasCity -> Dallas
+Denver -> Houston: Length=1334,  Path: Denver -> KansasCity -> Dallas -> Houston
+Denver -> Chicago: Length=1003,  Path: Denver -> Chicago
+Denver -> Boston: Length=1986,  Path: Denver -> Chicago -> Boston
+Denver -> NewYork: Length=1790,  Path: Denver -> Chicago -> NewYork
+Denver -> Atlanta: Length=1463,  Path: Denver -> KansasCity -> Atlanta
+Denver -> Miami: Length=2124,  Path: Denver -> KansasCity -> Atlanta -> Miami
+KansasCity -> Seattle: Length=1822,  Path: KansasCity -> SanFrancisco -> Seattle
+KansasCity -> SanFrancisco: Length=1015,  Path: KansasCity -> SanFrancisco
+KansasCity -> LosAngeles: Length=1396,  Path: KansasCity -> SanFrancisco -> LosAngeles
+KansasCity -> Denver: Length=599,  Path: KansasCity -> Denver
+KansasCity -> Dallas: Length=496,  Path: KansasCity -> Dallas
+KansasCity -> Houston: Length=735,  Path: KansasCity -> Dallas -> Houston
+KansasCity -> Chicago: Length=533,  Path: KansasCity -> Chicago
+KansasCity -> Boston: Length=1516,  Path: KansasCity -> Chicago -> Boston
+KansasCity -> NewYork: Length=1320,  Path: KansasCity -> Chicago -> NewYork
+KansasCity -> Atlanta: Length=864,  Path: KansasCity -> Atlanta
+KansasCity -> Miami: Length=1525,  Path: KansasCity -> Atlanta -> Miami
+Dallas -> Seattle: Length=2318,  Path: Dallas -> KansasCity -> SanFrancisco -> Seattle
+Dallas -> SanFrancisco: Length=1511,  Path: Dallas -> KansasCity -> SanFrancisco
+Dallas -> LosAngeles: Length=1435,  Path: Dallas -> LosAngeles
+Dallas -> Denver: Length=1095,  Path: Dallas -> KansasCity -> Denver
+Dallas -> KansasCity: Length=496,  Path: Dallas -> KansasCity
+Dallas -> Houston: Length=239,  Path: Dallas -> Houston
+Dallas -> Chicago: Length=1029,  Path: Dallas -> KansasCity -> Chicago
+Dallas -> Boston: Length=2012,  Path: Dallas -> KansasCity -> Chicago -> Boston
+Dallas -> NewYork: Length=1816,  Path: Dallas -> KansasCity -> Chicago -> NewYork
+Dallas -> Atlanta: Length=781,  Path: Dallas -> Atlanta
+Dallas -> Miami: Length=1426,  Path: Dallas -> Houston -> Miami
+Houston -> Seattle: Length=2557,  Path: Houston -> Dallas -> KansasCity -> SanFrancisco -> Seattle
+Houston -> SanFrancisco: Length=1750,  Path: Houston -> Dallas -> KansasCity -> SanFrancisco
+Houston -> LosAngeles: Length=1674,  Path: Houston -> Dallas -> LosAngeles
+Houston -> Denver: Length=1334,  Path: Houston -> Dallas -> KansasCity -> Denver
+Houston -> KansasCity: Length=735,  Path: Houston -> Dallas -> KansasCity
+Houston -> Dallas: Length=239,  Path: Houston -> Dallas
+Houston -> Chicago: Length=1268,  Path: Houston -> Dallas -> KansasCity -> Chicago
+Houston -> Boston: Length=2251,  Path: Houston -> Dallas -> KansasCity -> Chicago -> Boston
+Houston -> NewYork: Length=2055,  Path: Houston -> Dallas -> KansasCity -> Chicago -> NewYork
+Houston -> Atlanta: Length=810,  Path: Houston -> Atlanta
+Houston -> Miami: Length=1187,  Path: Houston -> Miami
+Chicago -> Seattle: Length=2097,  Path: Chicago -> Seattle
+Chicago -> SanFrancisco: Length=1548,  Path: Chicago -> KansasCity -> SanFrancisco
+Chicago -> LosAngeles: Length=1929,  Path: Chicago -> KansasCity -> SanFrancisco -> LosAngeles
+Chicago -> Denver: Length=1003,  Path: Chicago -> Denver
+Chicago -> KansasCity: Length=533,  Path: Chicago -> KansasCity
+Chicago -> Dallas: Length=1029,  Path: Chicago -> KansasCity -> Dallas
+Chicago -> Houston: Length=1268,  Path: Chicago -> KansasCity -> Dallas -> Houston
+Chicago -> Boston: Length=983,  Path: Chicago -> Boston
+Chicago -> NewYork: Length=787,  Path: Chicago -> NewYork
+Chicago -> Atlanta: Length=1397,  Path: Chicago -> KansasCity -> Atlanta
+Chicago -> Miami: Length=2058,  Path: Chicago -> KansasCity -> Atlanta -> Miami
+Boston -> Seattle: Length=3080,  Path: Boston -> Chicago -> Seattle
+Boston -> SanFrancisco: Length=2531,  Path: Boston -> Chicago -> KansasCity -> SanFrancisco
+Boston -> LosAngeles: Length=2912,  Path: Boston -> Chicago -> KansasCity -> SanFrancisco -> LosAngeles
+Boston -> Denver: Length=1986,  Path: Boston -> Chicago -> Denver
+Boston -> KansasCity: Length=1516,  Path: Boston -> Chicago -> KansasCity
+Boston -> Dallas: Length=2012,  Path: Boston -> Chicago -> KansasCity -> Dallas
+Boston -> Houston: Length=2251,  Path: Boston -> Chicago -> KansasCity -> Dallas -> Houston
+Boston -> Chicago: Length=983,  Path: Boston -> Chicago
+Boston -> NewYork: Length=214,  Path: Boston -> NewYork
+Boston -> Atlanta: Length=1474,  Path: Boston -> NewYork -> Atlanta
+Boston -> Miami: Length=2135,  Path: Boston -> NewYork -> Atlanta -> Miami
+NewYork -> Seattle: Length=2884,  Path: NewYork -> Chicago -> Seattle
+NewYork -> SanFrancisco: Length=2335,  Path: NewYork -> Chicago -> KansasCity -> SanFrancisco
+NewYork -> LosAngeles: Length=2716,  Path: NewYork -> Chicago -> KansasCity -> SanFrancisco -> LosAngeles
+NewYork -> Denver: Length=1790,  Path: NewYork -> Chicago -> Denver
+NewYork -> KansasCity: Length=1320,  Path: NewYork -> Chicago -> KansasCity
+NewYork -> Dallas: Length=1816,  Path: NewYork -> Chicago -> KansasCity -> Dallas
+NewYork -> Houston: Length=2055,  Path: NewYork -> Chicago -> KansasCity -> Dallas -> Houston
+NewYork -> Chicago: Length=787,  Path: NewYork -> Chicago
+NewYork -> Boston: Length=214,  Path: NewYork -> Boston
+NewYork -> Atlanta: Length=1260,  Path: NewYork -> Atlanta
+NewYork -> Miami: Length=1921,  Path: NewYork -> Atlanta -> Miami
+Atlanta -> Seattle: Length=2686,  Path: Atlanta -> KansasCity -> SanFrancisco -> Seattle
+Atlanta -> SanFrancisco: Length=1879,  Path: Atlanta -> KansasCity -> SanFrancisco
+Atlanta -> LosAngeles: Length=2216,  Path: Atlanta -> Dallas -> LosAngeles
+Atlanta -> Denver: Length=1463,  Path: Atlanta -> KansasCity -> Denver
+Atlanta -> KansasCity: Length=864,  Path: Atlanta -> KansasCity
+Atlanta -> Dallas: Length=781,  Path: Atlanta -> Dallas
+Atlanta -> Houston: Length=810,  Path: Atlanta -> Houston
+Atlanta -> Chicago: Length=1397,  Path: Atlanta -> KansasCity -> Chicago
+Atlanta -> Boston: Length=1474,  Path: Atlanta -> NewYork -> Boston
+Atlanta -> NewYork: Length=1260,  Path: Atlanta -> NewYork
+Atlanta -> Miami: Length=661,  Path: Atlanta -> Miami
+Miami -> Seattle: Length=3347,  Path: Miami -> Atlanta -> KansasCity -> SanFrancisco -> Seattle
+Miami -> SanFrancisco: Length=2540,  Path: Miami -> Atlanta -> KansasCity -> SanFrancisco
+Miami -> LosAngeles: Length=2861,  Path: Miami -> Houston -> Dallas -> LosAngeles
+Miami -> Denver: Length=2124,  Path: Miami -> Atlanta -> KansasCity -> Denver
+Miami -> KansasCity: Length=1525,  Path: Miami -> Atlanta -> KansasCity
+Miami -> Dallas: Length=1426,  Path: Miami -> Houston -> Dallas
+Miami -> Houston: Length=1187,  Path: Miami -> Houston
+Miami -> Chicago: Length=2058,  Path: Miami -> Atlanta -> KansasCity -> Chicago
+Miami -> Boston: Length=2135,  Path: Miami -> Atlanta -> NewYork -> Boston
+Miami -> NewYork: Length=1921,  Path: Miami -> Atlanta -> NewYork
+Miami -> Atlanta: Length=661,  Path: Miami -> Atlanta
